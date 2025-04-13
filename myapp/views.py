@@ -2,9 +2,9 @@ from django.shortcuts import render
 
 # Yangiliklar ma'lumotlari
 news_data = [
-    {"id": 1, "title": "Yangilik 1", "content": "Bu Yangilik 1 ning to'liq matni."},
-    {"id": 2, "title": "Yangilik 2", "content": "Bu Yangilik 2 ning to'liq matni."},
-    {"id": 3, "title": "Yangilik 3", "content": "Bu Yangilik 3 ning to'liq matni."},
+    {"id": 1, "title": "Burger", "content": "Bu Burger ning to'liq matni."},
+    {"id": 2, "title": "Lavash", "content": "Bu Lavash ning to'liq matni."},
+    {"id": 3, "title": "Hoddog", "content": "Bu Hoddog ning to'liq matni."},
 ]
 
 def news_list(request):

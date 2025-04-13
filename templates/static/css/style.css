@@ -1,92 +1,156 @@
+/* === Umumiy Sozlamalar === */
+:root {
+    --primary-color: #ff6347;
+    --primary-hover: #e5533d;
+    --bg-color: #fff8f0;
+    --white: #ffffff;
+    --text-color: #333;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --radius: 12px;
+    --transition: 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
 }
 
+/* === Layout === */
 .container {
-    max-width: 800px;
-    margin: 50px auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px 0;
 }
 
+/* === Header === */
 .header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.title {
-    color: #333;
-    font-size: 2.5em;
-    margin: 0;
-}
-
-.navigation .nav-list {
+    background-color: var(--primary-color);
+    padding: 1rem 2rem;
     display: flex;
-    justify-content: center;
-    list-style: none;
-    padding: 0;
-    margin: 10px 0 0;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0 0 var(--radius) var(--radius);
+    box-shadow: var(--shadow);
 }
 
-.navigation .nav-link {
-    text-decoration: none;
-    color: #007bff;
-    margin: 0 10px;
+.logo {
+    font-size: 2rem;
     font-weight: bold;
+    color: var(--white);
 }
 
-.navigation .nav-link:hover {
-    color: #0056b3;
+/* === Navigation === */
+.nav-list {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
 }
 
-.featured-section {
-    text-align: center;
-    margin-bottom: 20px;
+.nav-link {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color var(--transition);
 }
 
-.featured-image {
-    max-width: 100%;
-    border-radius: 8px;
+.nav-link:hover {
+    color: #ffdede;
 }
 
-.news-section {
-    margin-top: 20px;
+/* === Main Content === */
+.content {
+    margin-top: 2rem;
 }
 
+/* === Section Title === */
 .section-title {
-    font-size: 1.8em;
-    color: #444;
-    margin-bottom: 15px;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    text-align: center;
 }
 
-.news-list {
+/* === Menu & Cart List === */
+.menu-list, .cart-list {
     list-style: none;
     padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
 }
 
-.news-item {
-    margin-bottom: 10px;
+.menu-item, .cart-item {
+    background-color: var(--white);
+    padding: 1.2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform var(--transition);
 }
 
-.news-link {
-    text-decoration: none;
-    color: #333;
-    font-size: 1.2em;
-    transition: color 0.3s ease;
+.menu-item:hover {
+    transform: translateY(-5px);
 }
 
-.news-link:hover {
-    color: #007bff;
+.menu-item h3 {
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
 }
 
-.footer {
-    text-align: center;
-    margin-top: 30px;
-    color: #777;
-    font-size: 0.9em;
+.menu-item p {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 0.75rem;
+}
+
+.price {
+    font-weight: bold;
+    font-size: 1rem;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+/* === Buttons === */
+.order-btn {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color var(--transition);
+}
+
+.order-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+/* === Media Queries === */
+@media screen and (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .nav-list {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .section-title {
+        font-size: 1.6rem;
+    }
 }

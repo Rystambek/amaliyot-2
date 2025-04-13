@@ -1,36 +1,195 @@
-<!DOCTYPE html>
-<html lang="en">
 {% load static %}
+<!DOCTYPE html>
+<html lang="uz">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yangiliklar Sayti</title>
+    <title>BookCafe - FastFood</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .cart-section {
+            margin-top: 3rem;
+            background-color: #fff4ec;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            position: fixed;
+            right: 20px;
+            top: 80px;
+            width: 280px;
+            z-index: 1000;
+        }
+
+        .cart-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            border-left: 5px solid #ff6347;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .cart-item:hover {
+            background-color: #fff9f6;
+            transform: scale(1.02);
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .item-price {
+            font-weight: 500;
+            color: #ff6347;
+        }
+
+        .added-msg {
+            margin-left: 10px;
+            font-size: 0.9em;
+            color: #28a745;
+            animation: fadeOut 2s forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; display: none; }
+        }
+
+        .cart-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .clear-cart-btn {
+            background-color: #e5533d;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .clear-cart-btn:hover {
+            background-color: #cc442b;
+        }
+
+        .checkout-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
+        <!-- Header -->
         <header class="header">
-            <h1 class="title">Yangiliklar</h1>
+            <div class="logo">🍔 BookCafe</div>
             <nav class="navigation">
                 <ul class="nav-list">
                     <li><a href="#" class="nav-link">Bosh sahifa</a></li>
-                    <li><a href="#" class="nav-link">Yangiliklar</a></li>
-                    <li><a href="#" class="nav-link">Bog'lanish</a></li>
+                    <li><a href="#" class="nav-link">Menyu</a></li>
+                    <li><a href="#" class="nav-link">Aloqa</a></li>
                 </ul>
             </nav>
         </header>
+
+        <!-- Main Content -->
         <main class="content">
             <section class="news-section">
-                <h2 class="section-title">So'nggi Yangiliklar</h2>
-                <ul class="news-list">
+                <h2 class="section-title">So'nggi Taomlar</h2>
+                <ul class="news-list menu-list">
                     {% for news in news_list %}
-                        <li class="news-item">
-                            <a class="news-link" href="{% url 'news_detail' news.id %}">{{ news.title }}</a>
+                        <li class="news-item menu-item">
+                            <a class="news-link" href="{% url 'news_detail' news.id %}">
+                                <h3>{{ news.title }}</h3>
+                            </a>
+                            <p>{{ news.description|truncatechars:100 }}</p>
+                            <span class="price">18 000 so'm</span>
+                            <button class="order-btn" onclick="addToCart('{{ news.title }}', '18 000')">Buyurtma berish</button>
                         </li>
+                    {% empty %}
+                        <li class="news-item">Hozircha taomlar mavjud emas.</li>
                     {% endfor %}
                 </ul>
             </section>
         </main>
     </div>
+
+    <!-- Cart Section -->
+    <section class="cart-section">
+        <h2 class="section-title">Savatcha</h2>
+        <ul id="cart-list" class="cart-list"></ul>
+
+        <div class="cart-buttons">
+            <button class="clear-cart-btn" onclick="clearCart()">Savatchani tozalash</button>
+            <button class="checkout-btn" onclick="checkout()">Buyurtma berish</button>
+        </div>
+    </section>
+
+    <script>
+        function addToCart(itemName, price) {
+            const cartList = document.getElementById('cart-list');
+
+            const listItem = document.createElement('li');
+            listItem.className = 'cart-item';
+            listItem.innerHTML = `
+                <span class="item-name">${itemName}</span>
+                <span class="item-price">${price} so'm</span>
+                <span class="added-msg">✅ Qo‘shildi</span>
+            `;
+
+            cartList.appendChild(listItem);
+
+            listItem.style.opacity = 0;
+            listItem.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                listItem.style.transition = 'all 0.4s ease';
+                listItem.style.opacity = 1;
+                listItem.style.transform = 'translateY(0)';
+            }, 50);
+
+            setTimeout(() => {
+                const msg = listItem.querySelector('.added-msg');
+                if (msg) msg.remove();
+            }, 2000);
+        }
+
+        function clearCart() {
+            const cartList = document.getElementById('cart-list');
+            cartList.innerHTML = ''; // Clears the cart
+        }
+
+        function checkout() {
+            const cartList = document.getElementById('cart-list');
+            if (cartList.children.length > 0) {
+                alert('Buyurtmangiz muvaffaqiyatli yuborildi!');
+                clearCart();
+            } else {
+                alert('Savatchangiz bo\'sh!');
+            }
+        }
+    </script>
 </body>
 </html>
